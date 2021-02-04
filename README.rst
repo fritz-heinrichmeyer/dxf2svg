@@ -3,6 +3,10 @@ Dxf2svg - dxf to svg converter
 ==============================
 
 Dxf2svg is a dxf to svg format converter.
+This project is a **fork** from https://bitbucket.org/lukaszlaba/dxf2svg
+
+(from Lukasz Laba <lukaszlab@o2.pl>)
+
 
 Changelog
 ---------
@@ -56,10 +60,12 @@ If you want to help out, create a pull request or write email.
 
 More information
 ----------------
-Project website: https://bitbucket.org/lukaszlaba/dxf2svg
+Project website(old): https://bitbucket.org/lukaszlaba/dxf2svg
 
-Code repository: https://bitbucket.org/lukaszlaba/dxf2svg
+Code repository(new): https://github.com/fritz-heinrichmeyer/dxf2svg
 
 PyPI package: https://pypi.python.org/pypi/dxf2svg
 
-Contact: Lukasz Laba <lukaszlab@o2.pl>
+Contact(old): Lukasz Laba <lukaszlab@o2.pl>
+
+Contact(new): Fritz Heinrichmeyer <Fritz.Heinrichmeyer@gmail.com>
