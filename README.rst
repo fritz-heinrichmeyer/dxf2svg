@@ -27,6 +27,8 @@ How to install
 
 (according to https://python-packaging.readthedocs.io/en/latest/)::
 
+   git clone https://github.com/fritz-heinrichmeyer/dxf2svghttps://github.com/fritz-heinrichmeyer/dxf2svg.git
+   cd dxf2svg
    pip install .
 
 (*local*)
