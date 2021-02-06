@@ -26,4 +26,5 @@ setup(
     install_requires=[
           'svgwrite','ezdxf',
       ],
+    scripts=['bin/dxf2svg'],
     )
