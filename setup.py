@@ -27,4 +27,7 @@ setup(
           'svgwrite','ezdxf',
       ],
     scripts=['bin/dxf2svg'],
+    #entry_points = {
+    #    'console_scripts': ['dxf2svg-windows=dxf2svg.command_line:main'],
+    #},
     )

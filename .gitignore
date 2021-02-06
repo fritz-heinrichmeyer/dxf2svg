@@ -3,3 +3,5 @@ dist
 build
 *.svg
 dxf2svg.egg-info
+#wegen emacs
+*~
