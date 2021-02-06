@@ -27,15 +27,18 @@ How to install
 
 (according to https://python-packaging.readthedocs.io/en/latest/)::
 
-   pip install .(local)
+   pip install .
+
+(*local*)
 
 oder::
   
-   oder pip install -e . (symlink,handy for test)
+   pip install -e .
 
-Dxf2svg is available through PyPI and can be install with pip command. To install dxf2svg and needed requirements use pip by typing ::
+(*symlink,handy for tests*)
 
-  pip install svgwrite ezdxf dxf2svg
+.. Dxf2svg is available through PyPI and can be install with pip command. To install dxf2svg and needed requiremen   ts use pip by typing ::
+   pip install svgwrite ezdxf dxf2svg
 
 Using dxf2svg
 -------------
