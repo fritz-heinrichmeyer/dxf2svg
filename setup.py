@@ -23,4 +23,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Multimedia :: Graphics :: Graphics Conversion',
         ],
+    install_requires=[
+          'svgwrite','ezdxf',
+      ],
     )
