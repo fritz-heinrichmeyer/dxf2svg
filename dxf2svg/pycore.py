@@ -31,6 +31,14 @@ LAYER = 'svgframe'
 SVG_MAXSIZE = 300
 SCALE = 1.0
 
+def slice_l2(a: ezdxf.math._vector.Vec3):
+#def slice_l2(a):
+    "replacement for [:2]"
+    #print (" slice_l2: type(a)=\n")
+    #print(type(a))
+    #print ("\n")
+    return (a[0], a[1])
+
 def get_dxf_dwg_from_file(dxffilepath):
     return ezdxf.readfile(dxffilepath)
 
@@ -46,21 +54,23 @@ def get_empty_svg(alerttext='! nothing to display !'):
 #--------------------------------------------------
 
 def trans_line(dxf_entity):
-    line_start = dxf_entity.dxf.start[:2]
-    line_end = dxf_entity.dxf.end[:2]
-    svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = "black", stroke_width = 1.0/SCALE )
-    svg_entity.scale(SCALE,-SCALE)
-    return svg_entity
+#    line_start = dxf_entity.dxf.start[:2]
+     line_start = slice_l2(dxf_entity.dxf.start)
+#    line_end = dxf_entity.dxf.end[:2]
+     line_end =slice_l2(dxf_entity.dxf.end)
+     svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = "black", stroke_width = 1.0/SCALE )
+     svg_entity.scale(SCALE,-SCALE)
+     return svg_entity
 
 def trans_circle(dxf_entity):
-    circle_center = dxf_entity.dxf.center[:2]
+    circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
     svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = "black", fill="none", stroke_width = 1.0/SCALE )
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
 def trans_arc(dxf_entity):
-    circle_center = dxf_entity.dxf.center[:2]
+    circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
     svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = "black", fill="none", stroke_width = 1.0/SCALE )
     svg_entity.scale(SCALE,-SCALE)
@@ -68,7 +78,7 @@ def trans_arc(dxf_entity):
 
 def trans_text(dxf_entity):
     text_text = dxf_entity.dxf.text
-    text_insert = dxf_entity.dxf.insert[:2]
+    text_insert = slice_l2(dxf_entity.dxf.insert)
     text_height = dxf_entity.dxf.height * 1.4 # hotfix - 1.4 to fit svg and dvg
     svg_entity = svgwrite.Drawing().text(text_text, insert=[0, 0], font_size = text_height*SCALE)
     svg_entity.translate(text_insert[0]*(SCALE), -text_insert[1]*(SCALE))
@@ -97,7 +107,7 @@ def entity_filter(dxffilepath, frame_name=None):
                 if e.dxf.text == frame_name:
                     name_text_entity = e
     if name_text_entity:
-        text_point = name_text_entity.dxf.insert[:2]
+        text_point = slice_l2(name_text_entity.dxf.insert)
         text_height = name_text_entity.dxf.height
         for e in dxf.modelspace():
             if e.dxftype() == 'LWPOLYLINE' and e.dxf.layer == LAYER:
@@ -116,9 +126,9 @@ def entity_filter(dxffilepath, frame_name=None):
         ymax = max([i[1] for i in frame_points])
         for e in dxf.modelspace():
             point = None
-            if e.dxftype() == 'LINE': point = e.dxf.start[:2]
-            if e.dxftype() == 'CIRCLE': point = e.dxf.center[:2]
-            if e.dxftype() == 'TEXT': point = e.dxf.insert[:2]
+            if e.dxftype() == 'LINE': point = slice_l2(e.dxf.start)
+            if e.dxftype() == 'CIRCLE': point = slice_l2(e.dxf.center)
+            if e.dxftype() == 'TEXT': point = slice_l2(e.dxf.insert)
             if e.dxftype() == 'ARC':
                 center = e.dxf.center[:2]
                 radius = e.dxf.radius
@@ -148,7 +158,7 @@ def entity_filter(dxffilepath, frame_name=None):
                     ymin = min(ymin, e.dxf.start[1], e.dxf.end[1])
                     ymax = max(ymax,  e.dxf.start[1], e.dxf.end[1])
                 if e.dxftype() == 'CIRCLE':
-                    e.dxf.center[:2]
+                    slice_l2(e.dxf.center)
                     e.dxf.radius
                     xmin = min(xmin, e.dxf.center[0] - e.dxf.radius)
                     xmax = max(xmax, e.dxf.center[0] + e.dxf.radius)
@@ -160,7 +170,7 @@ def entity_filter(dxffilepath, frame_name=None):
                     ymin = min(ymin, e.dxf.insert[1])
                     ymax = max(ymax,  e.dxf.insert[1])
                 if e.dxftype() == 'ARC':      
-                    center = e.dxf.center[:2]
+                    center = slice_l2(e.dxf.center)
                     radius = e.dxf.radius
                 if e.dxftype() == 'POLYLINE':
                     x = [p[0] for p in e.points()]
