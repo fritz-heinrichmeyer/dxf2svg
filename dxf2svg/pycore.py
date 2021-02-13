@@ -158,7 +158,7 @@ def entity_filter(dxffilepath, frame_name=None):
                     ymin = min(ymin, e.dxf.start[1], e.dxf.end[1])
                     ymax = max(ymax,  e.dxf.start[1], e.dxf.end[1])
                 if e.dxftype() == 'CIRCLE':
-                    slice_l2(e.dxf.center)
+                    e.dxf.center = slice_l2(e.dxf.center)
                     e.dxf.radius
                     xmin = min(xmin, e.dxf.center[0] - e.dxf.radius)
                     xmax = max(xmax, e.dxf.center[0] + e.dxf.radius)

@@ -36,9 +36,11 @@ def main():
         dxf_path = os.path.join(console_path, dxffilename_to_convert)
         if os.path.isfile(dxf_path):
             print('Extracting %s ..'%os.path.basename(dxf_path))
+            
             #---
             try:
-                size = int(sys.argv[2])
+                size=int(sys.argv[2])
+                save_svg_from_dxf(dxf_path,size=size)
             except:
                 print ('!!size parameter wrong format - %s given, default size will be used !!'%sys.argv[2])
                 size = None
