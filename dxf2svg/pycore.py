@@ -130,7 +130,8 @@ def entity_filter(dxffilepath, frame_name=None):
             if e.dxftype() == 'CIRCLE': point = slice_l2(e.dxf.center)
             if e.dxftype() == 'TEXT': point = slice_l2(e.dxf.insert)
             if e.dxftype() == 'ARC':
-                center = e.dxf.center[:2]
+                #center = e.dxf.center[:2]
+                center = slice_l2(e.dxf.center)
                 radius = e.dxf.radius
                 start_angle = e.dxf.start_angle/ 360.0 * 2 * pi
                 delta_x = radius * cos(start_angle)
@@ -159,6 +160,7 @@ def entity_filter(dxffilepath, frame_name=None):
                     ymax = max(ymax,  e.dxf.start[1], e.dxf.end[1])
                 if e.dxftype() == 'CIRCLE':
                     e.dxf.center = slice_l2(e.dxf.center)
+                    e.dxf.center
                     e.dxf.radius
                     xmin = min(xmin, e.dxf.center[0] - e.dxf.radius)
                     xmax = max(xmax, e.dxf.center[0] + e.dxf.radius)
