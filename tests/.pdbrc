@@ -1,0 +1,3 @@
+b /home/fritz/Schreibtisch/schrievers_hausplaene/dxf2svg/dxf2svg/pycore.py:99
+import ezdxf
+b ezdxf.readfile
