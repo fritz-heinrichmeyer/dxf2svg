@@ -16,7 +16,7 @@ def pdb(e):
  #           point = None
   from ezdxf.colors import DXF_DEFAULT_COLORS, int2rgb
    rgb24 = DXF_DEFAULT_COLORS[3]
-    print(f'RGB Hex Value: #{rgb24:06X}')#:  RGB Hex Value: #00FF00
+    print(f'RGB Hex Value: #{rgb24:06X}')#:  RGB Hex Value:   #00FF00
    
      print (e.dxftype())
      return 42
