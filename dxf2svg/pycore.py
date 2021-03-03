@@ -60,26 +60,35 @@ def set_stroke(aci):
     stroke=f'#{rgb24:06X}'
     return stroke
 
+
+from ezdxf.addons.acadctb import DEFAULT_LINE_WEIGHTS
+thickness= ezdxf.addons.acadctb.DEFAULT_LINE_WEIGHTS[2]
+def set_thickness(i):
+    i = i+2
+    global thickness
+    thickness= ezdxf.addons.acadctb.DEFAULT_LINE_WEIGHTS[i]
+    return thickness
+
 def trans_line(dxf_entity):
 #    line_start = dxf_entity.dxf.start[:2]
      line_start = slice_l2(dxf_entity.dxf.start)
 #    line_end = dxf_entity.dxf.end[:2]
      line_end =slice_l2(dxf_entity.dxf.end)
-     svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = stroke, stroke_width = 1.0/SCALE )
+     svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = stroke, stroke_width =  thickness) #stroke_width = 1.0/SCALE
      svg_entity.scale(SCALE,-SCALE)
      return svg_entity
 
 def trans_circle(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = stroke, fill="none", stroke_width = 1.0/SCALE )
+    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = stroke, fill="none", stroke_width =thickness)
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
 def trans_arc(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = 1.0/SCALE )
+    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
@@ -218,6 +227,8 @@ def get_svg_form_dxf(dxffilepath, frame_name=None):
     for e in entites:
         point = None
         stroke= set_stroke(e.dxf.color)
+        set_thickness(e.dxf.thickness)
+        
         if e.dxftype() == 'LINE': svg.add(trans_line(e))
         if e.dxftype() == 'POLYLINE': svg.add(trans_polyline(e))
         if e.dxftype() == 'CIRCLE': svg.add(trans_circle(e))
