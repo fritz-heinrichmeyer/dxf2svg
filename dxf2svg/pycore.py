@@ -26,6 +26,7 @@ from math import sqrt, sin, cos, pi
 
 import ezdxf
 import svgwrite
+from ezdxf.colors import DXF_DEFAULT_COLORS, int2rgb
 
 LAYER = 'svgframe'
 SVG_MAXSIZE = 300
@@ -52,29 +53,37 @@ def get_empty_svg(alerttext='! nothing to display !'):
     return svg
     
 #--------------------------------------------------
+stroke= 'black'
+def set_stroke(aci):
+    global stroke
+    rgb24 = DXF_DEFAULT_COLORS[aci]
+    stroke=f'#{rgb24:06X}'
+    return stroke
 
 def trans_line(dxf_entity):
 #    line_start = dxf_entity.dxf.start[:2]
      line_start = slice_l2(dxf_entity.dxf.start)
 #    line_end = dxf_entity.dxf.end[:2]
      line_end =slice_l2(dxf_entity.dxf.end)
-     svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = "black", stroke_width = 1.0/SCALE )
+     svg_entity = svgwrite.Drawing().line(start=line_start, end=line_end, stroke = stroke, stroke_width = 1.0/SCALE )
      svg_entity.scale(SCALE,-SCALE)
      return svg_entity
 
 def trans_circle(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = "black", fill="none", stroke_width = 1.0/SCALE )
+    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = stroke, fill="none", stroke_width = 1.0/SCALE )
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
 def trans_arc(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = "black", fill="none", stroke_width = 1.0/SCALE )
+    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = 1.0/SCALE )
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
+
+
 
 def trans_text(dxf_entity):
     text_text = dxf_entity.dxf.text
@@ -87,9 +96,9 @@ def trans_text(dxf_entity):
 def trans_polyline(dxf_entity):
     points = [(x[0], x[1]) for x in dxf_entity.points()]
     if dxf_entity.CLOSED == 1:
-        svg_entity = svgwrite.Drawing().polygon(points=points, stroke='black', fill='none', stroke_width=1.0/SCALE)
+        svg_entity = svgwrite.Drawing().polygon(points=points, stroke=stroke, fill='none', stroke_width=1.0/SCALE)
     else:
-        svg_entity = svgwrite.Drawing().polyline(points=points, stroke='black', fill='none', stroke_width=1.0/SCALE)
+        svg_entity = svgwrite.Drawing().polyline(points=points, stroke=stroke, fill='none', stroke_width=1.0/SCALE)
     svg_entity.scale(SCALE, -SCALE)
     return svg_entity
 
@@ -125,7 +134,9 @@ def entity_filter(dxffilepath, frame_name=None):
         ymin = min([i[1] for i in frame_points])
         ymax = max([i[1] for i in frame_points])
         for e in dxf.modelspace():
-            point = None
+            
+ 
+            
             if e.dxftype() == 'LINE': point = slice_l2(e.dxf.start)
             if e.dxftype() == 'CIRCLE': point = slice_l2(e.dxf.center)
             if e.dxftype() == 'TEXT': point = slice_l2(e.dxf.insert)
@@ -205,6 +216,8 @@ def get_svg_form_dxf(dxffilepath, frame_name=None):
     #---
     svg = get_clear_svg(minx*SCALE, miny*SCALE, width*SCALE, height*SCALE)
     for e in entites:
+        point = None
+        stroke= set_stroke(e.dxf.color)
         if e.dxftype() == 'LINE': svg.add(trans_line(e))
         if e.dxftype() == 'POLYLINE': svg.add(trans_polyline(e))
         if e.dxftype() == 'CIRCLE': svg.add(trans_circle(e))
