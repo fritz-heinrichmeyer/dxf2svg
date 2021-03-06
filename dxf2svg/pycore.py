@@ -81,6 +81,7 @@ def trans_line(dxf_entity):
 def trans_circle(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
+    #print(f"trans_circle: circle_radius= {circle_radius:10g} circle_center={circle_center}")
     svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke = stroke, fill="none", stroke_width =thickness)
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
@@ -88,7 +89,13 @@ def trans_circle(dxf_entity):
 def trans_arc(dxf_entity):
     circle_center = slice_l2(dxf_entity.dxf.center)
     circle_radius = dxf_entity.dxf.radius
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
+    #print(f"trans_arc: dxf_entity.dxf.start_angle= {dxf_entity.dxf.start_angle} dxf_entity.dxf.end_angle={dxf_entity.dxf.end_angle} circle_center={circle_center},dxf_entity.dxf.center= {dxf_entity.dxf.center}")
+    #print(f"trans_arc: dxf_entity.dxf.radius= {dxf_entity.dxf.radius}")
+    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
+    #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
+    #besser: svgwrite.Drawing().path (->src/python/svgwrite/svgwrite/path.py)
+    #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
+    svg_entity
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
@@ -96,6 +103,7 @@ def trans_arc(dxf_entity):
 
 def trans_text(dxf_entity):
     text_text = dxf_entity.dxf.text
+    #print(text_text)
     text_insert = slice_l2(dxf_entity.dxf.insert)
     text_height = dxf_entity.dxf.height * 1.4 # hotfix - 1.4 to fit svg and dvg
     svg_entity = svgwrite.Drawing().text(text_text, insert=[0, 0], font_size = text_height*SCALE)
