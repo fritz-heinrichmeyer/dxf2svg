@@ -27,6 +27,7 @@ from math import sqrt, sin, cos, pi
 import ezdxf
 import svgwrite
 from ezdxf.colors import DXF_DEFAULT_COLORS, int2rgb
+from svgwrite.path import Path
 
 LAYER = 'svgframe'
 SVG_MAXSIZE = 300
@@ -87,13 +88,17 @@ def trans_circle(dxf_entity):
     return svg_entity
 
 def trans_arc(dxf_entity):
+    p= Path(d="M 0 0")
     circle_center = slice_l2(dxf_entity.dxf.center)
+    p.push_arc(target=circle_center, rotation=30, r=dxf_entity.dxf.radius, large_arc=False, angle_dir='-', absolute=True)
+    
+    
     circle_radius = dxf_entity.dxf.radius
     #print(f"trans_arc: dxf_entity.dxf.start_angle= {dxf_entity.dxf.start_angle} dxf_entity.dxf.end_angle={dxf_entity.dxf.end_angle} circle_center={circle_center},dxf_entity.dxf.center= {dxf_entity.dxf.center}")
     #print(f"trans_arc: dxf_entity.dxf.radius= {dxf_entity.dxf.radius}")
-    svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
+    #svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
-    #besser: svgwrite.Drawing().path (->src/python/svgwrite/svgwrite/path.py)
+    svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="5") # ->src/python/svgwrite/svgwrite/path.py
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
     svg_entity
     svg_entity.scale(SCALE,-SCALE)
