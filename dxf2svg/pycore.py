@@ -99,6 +99,7 @@ def trans_arc(dxf_entity):
     #svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
     svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="5") # ->src/python/svgwrite/svgwrite/path.py
+    print(f"p.commands= {p.tostring()}")
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
     svg_entity
     svg_entity.scale(SCALE,-SCALE)
