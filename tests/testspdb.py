@@ -14,36 +14,24 @@
 from svgwrite.path import Path
 import svgwrite
 import math
-center=(10,10)
-arc_start= 30
-arc_end= 150
-p= Path(d=f"M {10 * math.cos(math.pi *arc_start/180 ) +center[0] } {10 * math.sin(math.pi * arc_start/180) +center[1]} ")
-target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1])
-p.push_arc(target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=center, large_arc=True, angle_dir='-', absolute=True)
+def arc(center):
+  #center=(10,10)
+  arc_start= 30
+  arc_end= 150
+  p= Path(d=f"M {10 * math.cos(math.pi *arc_start/180 ) +center[0] } {10 * math.sin(math.pi * arc_start/180) +center[1]} ")
+  target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1])
+  p.push_arc(target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(10,10), large_arc=True, angle_dir='-', absolute=True)
+  # p.push("l 10 10 ")
 
 
-svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="0.01")
-print (svg_entity._repr_svg_())
-print (svg_entity.commands)
-print (p.commands)
-
-def pdb(e):
- #   for e in dxf.modelspace():
- #           point = None
-  from ezdxf.colors import DXF_DEFAULT_COLORS, int2rgb
-  rgb24 = DXF_DEFAULT_COLORS[3]
-  print(f'RGB Hex Value: #{rgb24:06X}')#:  RGB Hex Value:   #00FF00
-   
-  print (e.dxftype())
-  return 42
-  if e.dxftype() == 'LINE':
-         point = slice_l2(e.dxf.start)
-         print ('LINE')
-  if e.dxftype() == 'CIRCLE': point = slice_l2(e.dxf.center)
-  if e.dxftype() == 'TEXT': point = slice_l2(e.dxf.insert)
-#     if e.dxftype() == 'ARC':
-
+  svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="1", fill="none")
+  ergebnis = svg_entity._repr_svg_()
+  return ergebnis
 if __name__ == "__main__":
-     print ('tschüßß')
+     punkte = [(10,10), (30,30), (60,60)]
+     zeichung =""
+     for punkt in punkte:
+       zeichung += arc(punkt) + "\n "
+     print(zeichung)    
 # pdb(0)
 
