@@ -6,16 +6,22 @@
      https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
      https://www.december.com/html/spec/colorsvg.html
      https://de.wikipedia.org/wiki/Scalable_Vector_Graphics#Pfad
+     http://jsfiddle.net/DFhUF/1393/
         a picture of a line with arc blips</desc>
   <rect x="1" y="1" width="1198" height="398"
         fill="none" stroke="blue" stroke-width="5" />
-
- <path d="M275 175 v-150 a 300 150 30 0 0 -180 180 z"
-        fill="none" stroke="magenta" stroke-width="5" />
+<path d="M275,175 v -150 a150,150 0 0 0 -150,150 z"
+        fill="yellow" stroke="blue" stroke-width="5" />
+ 
 		
-		 <path d="M 200 200 a 400 400 30 0 0 -400 400 z"
+		 <!--path d="M 300 300  a 100.1 100.1 30 0 1 -600 600 z"
 		       fill="red" stroke="blue" stroke-width="5" />
+		 <path d="M150 0 L75 200 225 200 0 0 5.877852522924732 8.090169943749475 a 10 10 30 0 0 5.877852522924732 -8.090169943749475Z"
+		       fill="magenta" stroke="blue" stroke-width="3" /-->
 
-		 <path d="M -5.877852522924732 8.090169943749475  a 10 10 30 0 0 5.877852522924732 8.090169943749475" stroke="magenta" stroke-width="1" />
+		 <!--path d="M 127.35868,27.718707 a 19.561792,34.196342 0 0 1 23.47781,0.283778 L 138.9894,55.214249 z" stroke="blue" stroke-width="1"
+		       fill="yellow" /-->
+		 <path d="M 18.66025403784439 15.0  A 10 10 30 1,0 1.3397459621556127 15.0 L 10 10  z" stroke="blue" stroke-width="1"
+		      fill="red" />
 </svg>
  
