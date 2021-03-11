@@ -22,7 +22,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import os
 import sys
-from math import sqrt, sin, cos, pi
+import math
+#from math import sqrt, sin, cos, pi
 
 import ezdxf
 import svgwrite
@@ -88,9 +89,15 @@ def trans_circle(dxf_entity):
     return svg_entity
 
 def trans_arc(dxf_entity):
-    p= Path(d="M 0 0")
-    circle_center = slice_l2(dxf_entity.dxf.center)
-    p.push_arc(target=circle_center, rotation=30, r=dxf_entity.dxf.radius, large_arc=False, angle_dir='-', absolute=True)
+    radius= dxf_entity.dxf.radius
+    #stroke = dxf_entity.dxf.color
+    center = slice_l2(dxf_entity.dxf.center)
+    arc_start = dxf_entity.dxf.start_angle
+    arc_end = dxf_entity.dxf.end_angle
+    
+    p= Path(d=f"M {radius * math.cos(math.pi *arc_start/180 ) +center[0] } {radius * math.sin(math.pi * arc_start/180) +center[1]} ")
+    
+    p.push_arc(target=(radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(radius,radius), large_arc=False, angle_dir='-', absolute=True)
     
     
     circle_radius = dxf_entity.dxf.radius
@@ -98,7 +105,7 @@ def trans_arc(dxf_entity):
     #print(f"trans_arc: dxf_entity.dxf.radius= {dxf_entity.dxf.radius}")
     #svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
-    svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="5") # ->src/python/svgwrite/svgwrite/path.py
+    svg_entity = svgwrite.Drawing().path(d=p.commands,stroke=stroke, stroke_width="1") # ->src/python/svgwrite/svgwrite/path.py
     print(f"p.commands= {p.tostring()}")
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
     svg_entity

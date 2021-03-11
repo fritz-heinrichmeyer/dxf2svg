@@ -15,12 +15,13 @@ from svgwrite.path import Path
 import svgwrite
 import math
 def arc(center):
-  #center=(10,10)
+  #center=(10,10,1)
   arc_start= 30
   arc_end= 150
-  p= Path(d=f"M {10 * math.cos(math.pi *arc_start/180 ) +center[0] } {10 * math.sin(math.pi * arc_start/180) +center[1]} ")
-  target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1])
-  p.push_arc(target=(10 * math.cos(math.pi *arc_end/180 ) +center[0], 10 * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(10,10), large_arc=True, angle_dir='-', absolute=True)
+  radius =center[2]
+  p= Path(d=f"M {radius * math.cos(math.pi *arc_start/180 ) +center[0] } {radius * math.sin(math.pi * arc_start/180) +center[1]} ")
+  target=( radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1])
+  p.push_arc(target=(radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(radius,radius), large_arc=True, angle_dir='-', absolute=True)
   # p.push("l 10 10 ")
 
 
@@ -28,7 +29,8 @@ def arc(center):
   ergebnis = svg_entity._repr_svg_()
   return ergebnis
 if __name__ == "__main__":
-     punkte = [(10,10), (30,30), (60,60)]
+     print("\n ")
+     punkte = [(100,10,10), (200,10,20), (300,10,40)]
      zeichung =""
      for punkt in punkte:
        zeichung += arc(punkt) + "\n "
