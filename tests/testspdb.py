@@ -14,6 +14,26 @@
 from svgwrite.path import Path
 import svgwrite
 import math
+svgKopf = """<?xml version="1.0" standalone="no"?>
+<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+     xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <title>Example arcs01 - arc commands in path data</title>
+  <title>Example arcs01 - arc commands in path data</title>
+  <desc>Picture of a pie chart with two pie wedges and
+     https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+     https://www.december.com/html/spec/colorsvg.html
+     https://de.wikipedia.org/wiki/Scalable_Vector_Graphics#Pfad
+     http://jsfiddle.net/DFhUF/1393/
+        a picture of a line with arc blips</desc>
+  <rect x="1" y="1" width="1198" height="398"
+        fill="none" stroke="blue" stroke-width="5" />
+<path d="M 275 175 v -150 a150 150 0 0 0 -150 150 z"
+        fill="yellow" stroke="blue" stroke-width="2px" />
+
+"""
+print(svgKopf)
+
+
 def arc(center):
   #center=(10,10,1)
   arc_start= 30
@@ -36,4 +56,8 @@ if __name__ == "__main__":
        zeichung += arc(punkt) + "\n "
      print(zeichung)    
 # pdb(0)
+svgFuss = """</svg>
+"""
+print(svgFuss)
+
 
