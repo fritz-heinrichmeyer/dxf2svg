@@ -15,7 +15,7 @@ from svgwrite.path import Path
 import svgwrite
 import math
 svgKopf = """<?xml version="1.0" standalone="no"?>
-<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+<svg width="10cm" height="5.25cm" viewBox="0 0 1000 500"
      xmlns="http://www.w3.org/2000/svg" version="1.1">
   <title>Example arcs01 - arc commands in path data</title>
   <title>Example arcs01 - arc commands in path data</title>
@@ -39,10 +39,18 @@ def arc(center):
   arc_start= 30
   arc_end= 150
   radius =center[2]
-  p= Path(d=f"M {radius * math.cos(math.pi *arc_start/180 ) +center[0] } {radius * math.sin(math.pi * arc_start/180) +center[1]} ")
-  target=( radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1])
-  p.push_arc(target=(radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(radius,radius), large_arc=True, angle_dir='-', absolute=True)
-  # p.push("l 10 10 ")
+  #p= Path(d=f"M {center[0]} {center[1]}")
+  p=Path(d=[])
+  current_a = (-(radius * math.cos(math.pi *arc_start/180.0 )) +center[0], -(radius * math.sin(math.pi * arc_start/180.0)) +center[1])
+  
+  #p.push(f"M {(radius * math.cos(math.pi *arc_start/180.0 )) +center[0] } {(radius * math.sin(math.pi * arc_start/180.0)) +center[1] } ")
+  p.push(f"M 0 0 l 0 0 {center[0]} {center[1]} ")
+  p.push(f"M {current_a[0]} {current_a[1]} l 0 0 {current_a[0]} {current_a[1]} ")
+  target=( -(radius * math.cos(math.pi *arc_end/180 )) +center[0], -(radius * math.sin(math.pi * arc_end/180))+center[1] )
+  p.push_arc(target=target, rotation=0, r=radius, large_arc=True, angle_dir='+', absolute=False)
+  p.push(f" L 0 0 {target[0]} {target[1]} ")
+  
+  #p.push(f"l {center[0]} {center[1]} ")
 
 
   svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="1", fill="none")
@@ -50,7 +58,7 @@ def arc(center):
   return ergebnis
 if __name__ == "__main__":
      print("\n ")
-     punkte = [(100,10,10), (200,10,20), (300,10,40)]
+     punkte = [(100,80,10), (200,80,20), (300,80,40)]
      zeichung =""
      for punkt in punkte:
        zeichung += arc(punkt) + "\n "
