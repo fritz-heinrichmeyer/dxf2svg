@@ -94,21 +94,21 @@ def trans_arc(dxf_entity):
     center = slice_l2(dxf_entity.dxf.center)
     arc_start = dxf_entity.dxf.start_angle
     arc_end = dxf_entity.dxf.end_angle
-    
-    p= Path(d=f"M {radius * math.cos(math.pi *arc_start/180 ) +center[0] } {radius * math.sin(math.pi * arc_start/180) +center[1]} ")
-    
-    p.push_arc(target=(radius * math.cos(math.pi *arc_end/180 ) +center[0], radius * math.sin(math.pi * arc_end/180)+center[1]), rotation=30, r=(radius,radius), large_arc=False, angle_dir='-', absolute=True)
-    
-    
-    circle_radius = dxf_entity.dxf.radius
+    p=Path(d=[])
+    radius = dxf_entity.dxf.radius
+    current_a = (-(radius * math.cos(math.pi * (arc_start/180.0 ))) +center[0], -(radius * math.sin(math.pi * (arc_start/180.0))) +center[1])
+    p.push(f"M {current_a[0]} {current_a[1]} L {center[0]} {center[1]}  {current_a[0]} {current_a[1]} ")
+    target=( -(radius * math.cos(math.pi * (arc_end/180.1) )) +center[0], -(radius * math.sin(math.pi * (arc_end/180.1)))+center[1] )
+    p.push_arc(target, rotation=0, r=radius, large_arc=False , angle_dir='-', absolute=True)
+    p.push(f" L {target[0]} {target[1]} ")
+    p.push(f"L {target[0]} {target[1]} {center[0]} {center[1]}") 
     #print(f"trans_arc: dxf_entity.dxf.start_angle= {dxf_entity.dxf.start_angle} dxf_entity.dxf.end_angle={dxf_entity.dxf.end_angle} circle_center={circle_center},dxf_entity.dxf.center= {dxf_entity.dxf.center}")
     #print(f"trans_arc: dxf_entity.dxf.radius= {dxf_entity.dxf.radius}")
     #svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
-    svg_entity = svgwrite.Drawing().path(d=p.commands,stroke=stroke, stroke_width="1") # ->src/python/svgwrite/svgwrite/path.py
-    print(f"p.commands= {p.tostring()}")
+    svg_entity = svgwrite.Drawing().path(d=p.commands,stroke=stroke, stroke_width=thickness ,fill="none") # ->src/python/svgwrite/svgwrite/path.py
+    print(f"p.commands= {svg_entity._repr_svg_()}")
     #svg_entity = svgwrite.Drawing().arc(center=circle_center, r=circle_radius, stroke =stroke , fill="none", stroke_width = thickness)
-    svg_entity
     svg_entity.scale(SCALE,-SCALE)
     return svg_entity
 
