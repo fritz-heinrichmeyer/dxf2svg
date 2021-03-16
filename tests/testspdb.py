@@ -45,12 +45,12 @@ def arc(center):
   
   #p.push(f"M {(radius * math.cos(math.pi *arc_start/180.0 )) +center[0] } {(radius * math.sin(math.pi * arc_start/180.0)) +center[1] } ")
   #p.push(f"M 0 0 L 0 0 {center[0]} {center[1]} ")
-  p.push(f"M {current_a[0]} {current_a[1]} L {center[0]} {center[1]}  {current_a[0]} {current_a[1]} ")
+  p.push(f"M {current_a[0]} {current_a[1]} ")
   target=( -(radius * math.cos(math.pi * (arc_end/180.1) )) +center[0], -(radius * math.sin(math.pi * (arc_end/180.1)))+center[1] )
   p.push_arc(target, rotation=0, r=radius, large_arc=False , angle_dir='-', absolute=True)
-  p.push(f" L {target[0]} {target[1]} ")
+  #p.push(f" L {target[0]} {target[1]} ")
   
-  p.push(f"L {target[0]} {target[1]} {center[0]} {center[1]}")
+  #p.push(f"L {target[0]} {target[1]} {center[0]} {center[1]}")
 
 
   svg_entity = svgwrite.Drawing().path(d=p.commands,stroke="blue", stroke_width="1", fill="none")

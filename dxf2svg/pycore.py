@@ -97,11 +97,12 @@ def trans_arc(dxf_entity):
     p=Path(d=[])
     radius = dxf_entity.dxf.radius
     current_a = (-(radius * math.cos(math.pi * (arc_start/180.0 ))) +center[0], -(radius * math.sin(math.pi * (arc_start/180.0))) +center[1])
-    p.push(f"M {current_a[0]} {current_a[1]} L {center[0]} {center[1]}  {current_a[0]} {current_a[1]} ")
+    #p.push(f"M {current_a[0]} {current_a[1]} L {center[0]} {center[1]}  {current_a[0]} {current_a[1]} ")
+    p.push(f"M {current_a[0]} {current_a[1]}  ")
     target=( -(radius * math.cos(math.pi * (arc_end/180.1) )) +center[0], -(radius * math.sin(math.pi * (arc_end/180.1)))+center[1] )
     p.push_arc(target, rotation=0, r=radius, large_arc=False , angle_dir='-', absolute=True)
-    p.push(f" L {target[0]} {target[1]} ")
-    p.push(f"L {target[0]} {target[1]} {center[0]} {center[1]}") 
+    #p.push(f" L {target[0]} {target[1]} ")
+    #p.push(f"L {target[0]} {target[1]} {center[0]} {center[1]}") 
     #print(f"trans_arc: dxf_entity.dxf.start_angle= {dxf_entity.dxf.start_angle} dxf_entity.dxf.end_angle={dxf_entity.dxf.end_angle} circle_center={circle_center},dxf_entity.dxf.center= {dxf_entity.dxf.center}")
     #print(f"trans_arc: dxf_entity.dxf.radius= {dxf_entity.dxf.radius}")
     #svg_entity = svgwrite.Drawing().circle(center=circle_center, r=0, stroke =stroke , fill="none", stroke_width = thickness)# !!!
