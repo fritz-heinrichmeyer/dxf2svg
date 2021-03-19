@@ -69,6 +69,7 @@ def set_thickness(i):
     i = i+2
     global thickness
     thickness= ezdxf.addons.acadctb.DEFAULT_LINE_WEIGHTS[i]
+    thickness ="0.018447992500000003"
     return thickness
 
 def trans_line(dxf_entity):
