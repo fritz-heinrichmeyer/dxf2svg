@@ -30,7 +30,7 @@ setup(
     scripts=['bin/dxf2svg'],
     entry_points={
         'console_scripts': [
-            'dxf2svg-win = dxf2svg.__main__:main',  # gxf to svg converter
+            'dxf2svg-win = dxf2svg.__main__:main',  # gxf to svg converter  
         ]
     },
     )
